@@ -99,7 +99,6 @@
             this.lblPort.Size = new System.Drawing.Size(53, 12);
             this.lblPort.TabIndex = 10;
             this.lblPort.Text = "포트번호";
-            this.lblPort.Click += new System.EventHandler(this.lblPort_Click);
             // 
             // lblIP
             // 
@@ -109,7 +108,6 @@
             this.lblIP.Size = new System.Drawing.Size(44, 12);
             this.lblIP.TabIndex = 9;
             this.lblIP.Text = "IP 주소";
-            this.lblIP.Click += new System.EventHandler(this.lblIP_Click);
             // 
             // frmClient
             // 
@@ -126,6 +124,7 @@
             this.Controls.Add(this.lblIP);
             this.Name = "frmClient";
             this.Text = "Client_001";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClient_FormClosing);
             this.Load += new System.EventHandler(this.frmClient_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
