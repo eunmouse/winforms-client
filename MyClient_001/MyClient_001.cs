@@ -104,27 +104,30 @@ namespace MyClient_001
             try
             {
                 // 서버에 메시지 전송
-                string msg = txtMessage.Text;
+                string msg = txtMessage.Text.Trim();
 
-                // 문자열 -> 바이트로 인코딩
-                byte[] byteMsg = Encoding.Default.GetBytes(msg);
-                stream.Write(byteMsg, 0, byteMsg.Length);
-                writeRtbChat("클라이언트 : " + msg);
-
-                // txtMessage 객체는 UI 스레드(메인 스레드) 에서만 접근 가능하여, Invoke 로 넘겨서 처리 
-                if (txtMessage.InvokeRequired == true)
+                // 공백이 아닌 경우에만 메시지 전송되도록 수정 
+                if (msg != "")
                 {
-                    txtMessage.Invoke((MethodInvoker)(() =>
+                    // 문자열 -> 바이트로 인코딩
+                    byte[] byteMsg = Encoding.Default.GetBytes(msg);
+                    stream.Write(byteMsg, 0, byteMsg.Length);
+                    writeRtbChat("클라이언트 : " + msg);
+
+                    // txtMessage 객체는 UI 스레드(메인 스레드) 에서만 접근 가능하여, Invoke 로 넘겨서 처리 
+                    if (txtMessage.InvokeRequired == true)
                     {
-                        txtMessage.Clear();
-                    }));
+                        txtMessage.Invoke((MethodInvoker)(() =>
+                        {
+                            txtMessage.ResetText();
+                        }));
+                    }
                 }
-                
             }
             catch (Exception ex)
             {
                 Console.WriteLine("에러임 : " + ex.Message);
-                writeRtbChat("메시지 전송과정에서 에러발생");
+                writeRtbChat("메시지 전송과정에서 에러발생...");
             }
         }
 
